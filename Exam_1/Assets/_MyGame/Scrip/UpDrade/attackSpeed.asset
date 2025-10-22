@@ -16,3 +16,4 @@ MonoBehaviour:
   upgradeName: "T\u0103ng t\u1ED1c \u0111\xE1nh"
   description: "T\u0103ng 20% t\u1ED1c \u0111\u1ED9 \u0111\xE1nh."
   value: 18
+  icon: {fileID: 21300000, guid: e5a2bfd7bc3ec9b4c8225dcd8d8e9af6, type: 3}

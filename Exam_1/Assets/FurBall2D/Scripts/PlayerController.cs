@@ -80,7 +80,7 @@ public class PlayerController : MonoBehaviour {
 
 		anim.SetFloat ("Speed", Mathf.Abs (hor));
 
-		rb2d.velocity = new Vector2 (hor * maxSpeed, rb2d.velocity.y);
+		rb2d.linearVelocity = new Vector2 (hor * maxSpeed, rb2d.linearVelocity.y);
 		  
 		isGrounded = Physics2D.OverlapCircle (groundCheck.position, 0.15F, whatIsGround);
 
@@ -89,7 +89,7 @@ public class PlayerController : MonoBehaviour {
 		if ((hor > 0 && !lookingRight)||(hor < 0 && lookingRight))
 			Flip ();
 		 
-		anim.SetFloat ("vSpeed", GetComponent<Rigidbody2D>().velocity.y);
+		anim.SetFloat ("vSpeed", GetComponent<Rigidbody2D>().linearVelocity.y);
 	}
 
 

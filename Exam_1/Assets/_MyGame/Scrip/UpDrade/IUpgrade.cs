@@ -57,9 +57,9 @@ public class DamageUpgrade : IUpgrade
 {
     public string Name { get; }
     public string Description { get; }
-    private float amount;
+    private int amount;
 
-    public DamageUpgrade(string name, string desc, float amount)
+    public DamageUpgrade(string name, string desc, int amount)
     {
         Name = name;
         Description = desc;

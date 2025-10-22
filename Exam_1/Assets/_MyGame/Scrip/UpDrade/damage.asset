@@ -16,3 +16,4 @@ MonoBehaviour:
   upgradeName: damage
   description: tang suc manh
   value: 17
+  icon: {fileID: 21300000, guid: 8f770f6ec462fff4bbfda45aea95de20, type: 3}

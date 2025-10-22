@@ -10,7 +10,7 @@ public class PopUp : MonoBehaviour
 
     private void Start()
     {
-        text_Value = textMeshProUGUI.text;
+        textMeshProUGUI.text = text_Value;
         Destroy(gameObject, 1.5f);
     }
 }

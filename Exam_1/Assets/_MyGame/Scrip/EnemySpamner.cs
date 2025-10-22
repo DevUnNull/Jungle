@@ -18,6 +18,7 @@ public class EnemySpamner : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (Time.deltaTime == 0) { return; }
         spamTimer += Time.deltaTime+toHard;
         if(spamTimer >= spamRate)
         {

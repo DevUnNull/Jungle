@@ -16,3 +16,4 @@ MonoBehaviour:
   upgradeName: giap
   description: tang giap
   value: 43
+  icon: {fileID: 21300000, guid: 3ef844187987ee6428cfe0e3f08db9ad, type: 3}

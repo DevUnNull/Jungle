@@ -11,16 +11,19 @@ public class Bullet : MonoBehaviour
     public int diem;
 
     public int minDamage =4;
-    public int maxDamage =10;
-    
+    public int maxDamage;
+    InformationPlayer player;
     Enemy enemyS;
     
     // Start is called before the first frame update
     void Start()
     {
+        player = FindAnyObjectByType<InformationPlayer>();
         rb = GetComponent<Rigidbody2D>();
-        rb.velocity = transform.right * speed;
+        rb.linearVelocity = transform.right * speed;
         Destroy(gameObject, lifeTime);
+        maxDamage = player.damage;
+        Debug.Log(maxDamage);
     }
 
     // Update is called once per frame

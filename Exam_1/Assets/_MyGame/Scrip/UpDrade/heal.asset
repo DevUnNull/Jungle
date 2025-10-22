@@ -16,3 +16,4 @@ MonoBehaviour:
   upgradeName: heal
   description: duoc tang 15 mau
   value: 15
+  icon: {fileID: 21300000, guid: a9a030673ebda0f459e600bd76922836, type: 3}

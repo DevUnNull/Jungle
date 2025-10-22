@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 2787187569751804924}
   - component: {fileID: 1440529202394908277}
   - component: {fileID: 3677692673893451958}
+  - component: {fileID: 2841136331611086353}
   m_Layer: 0
   m_Name: Enemy
   m_TagString: Enemy
@@ -52,6 +53,9 @@ SpriteRenderer:
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 0
   m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -95,6 +99,7 @@ CircleCollider2D:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1289081804528954720}
   m_Enabled: 1
+  serializedVersion: 3
   m_Density: 1
   m_Material: {fileID: 0}
   m_IncludeLayers:
@@ -118,13 +123,13 @@ CircleCollider2D:
     m_Bits: 4294967295
   m_IsTrigger: 1
   m_UsedByEffector: 0
-  m_UsedByComposite: 0
+  m_CompositeOperation: 0
+  m_CompositeOrder: 0
   m_Offset: {x: -0.016549315, y: 0}
-  serializedVersion: 2
   m_Radius: 0.13062835
 --- !u!95 &1440529202394908277
 Animator:
-  serializedVersion: 5
+  serializedVersion: 7
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -138,6 +143,7 @@ Animator:
   m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
   m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
@@ -155,6 +161,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 89b85d7e7ec7efb43baf6a4a696b941a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  enemyPopUp: {fileID: 2841136331611086353}
   moveSpeed: 0.5
   minDamage: 10
   maxDamage: 0
+  healthEnemy: 10
+--- !u!114 &2841136331611086353
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1289081804528954720}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3c3bf2f82fcfa1c448f9f36988a76400, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _camera: {fileID: 0}
+  PopUp_Prefab: {fileID: 2151743155969320845, guid: aa269a4dc3f22e24babfaeffe4fe0314, type: 3}
+  offset: {x: 0, y: 0.2, z: 0}

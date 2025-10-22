@@ -22,7 +22,7 @@ public class Eye : MonoBehaviour
     {
         Vector2 mousePosition = maincamera.ScreenToWorldPoint(Input.mousePosition); // lấy giá trị của chuột trong không gian thực
         Vector2 lookDirection = mousePosition - rb.position;  //Đây là vector hướng từ vị trí của nhân vật (rb.position) đến vị trí của chuột (mousePosition). Vector này chỉ ra hướng mà nhân vật cần nhìn.
-        rb.velocity = lookDirection * speed; // hướng đi của nhân vật theo chuột
+        rb.linearVelocity = lookDirection * speed; // hướng đi của nhân vật theo chuột
 
     }    
 }

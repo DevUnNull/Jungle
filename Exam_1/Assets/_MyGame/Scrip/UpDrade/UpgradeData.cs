@@ -8,4 +8,5 @@ public class UpgradeData : ScriptableObject
     [TextArea] public string description;
 
     public int value; // giá trị nâng cấp
+    public Sprite icon; // Icon hình ảnh cho nâng cấp này
 }

@@ -63,6 +63,10 @@ public class Move : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (Time.deltaTime==0)
+        {
+            return;
+        }
         levelUp.StrongBullet();
         levelUp.SpeedBullet();
 
@@ -146,7 +150,7 @@ public class Move : MonoBehaviour
 
     void Movee(float dir)
     {
-        rb.velocity = new Vector2(dir * moveSpeed, rb.velocity.y);
+        rb.linearVelocity = new Vector2(dir * moveSpeed, rb.linearVelocity.y);
         anim.SetBool(idRuning, true);
     }
     IEnumerator DestroyAfterDelay(GameObject obj, float delay) // xóa 1 obj nào đó , trong ... giây
@@ -158,7 +162,7 @@ public class Move : MonoBehaviour
     void Jum()
     {
 
-        rb.velocity = new Vector2(rb.velocity.x, jumFore);
+        rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumFore);
         GameObject norInstance =  Instantiate(nor,jumPoint.position,jumPoint.rotation); // tạo obj norInstance
         StartCoroutine(DestroyAfterDelay(norInstance, 1f)); //StartCoroutine được sử dụng để bắt đầu thực thi một coroutine
         anim.SetBool(idJump, true);

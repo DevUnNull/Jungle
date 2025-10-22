@@ -2,6 +2,10 @@
 
 public class Enemy : MonoBehaviour
 {
+    // PopUp enemy
+    public EnemyPopUp enemyPopUp;
+
+    //----
     public float moveSpeed = 0.5f;
     private Transform playerTransform;
 
@@ -39,6 +43,7 @@ public class Enemy : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        enemyPopUp = GetComponent<EnemyPopUp>();
         levelUp = FindObjectOfType<LevelUp>();
 
         GameObject playerObject = GameObject.FindGameObjectWithTag("Player");
@@ -73,12 +78,13 @@ public class Enemy : MonoBehaviour
         {
             if(levelUp != null)
             {
-                //levelUp.UpEx(1);
+                levelUp.AddExp(1);
             }
             Destroy(gameObject);
             GameManager.instance.AddScore(1);
             _AudioManager.Instance.PlaySoundEffectMusic(_AudioManager.Instance.KillEnemy);
         }
+        enemyPopUp.PopUpDame(damage);
         
     }
 }
