@@ -14,6 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   upgradeType: Damage
   upgradeName: damage
-  description: tang suc manh
-  value: 17
-  icon: {fileID: 21300000, guid: 8f770f6ec462fff4bbfda45aea95de20, type: 3}
+  description: "t\u0103ng 5 s\u1EE9c m\u1EA1nh"
+  value: 5
+  icon: {fileID: -4674136928923305668, guid: ccacf469ee67cfb4b9a1ce76a21afd9e, type: 3}

@@ -4,17 +4,18 @@ using UnityEngine;
 using UnityEngine.UI;
 public class Move : MonoBehaviour
 {
-    private float moveSpeed = 2f;
+    private float moveSpeed;
+    private float baseMoveSpeed; // Lưu tốc độ cơ bản cho dash
     private float jumFore = 3f;
     private Rigidbody2D rb;
-    private bool facingRight=true;
+    private bool facingRight = true;
     private Animator anim;
     private int idRuning;
     private int idJump;
 
     public GameObject bullerPrefabs;
     public Transform firePoint;
-    public float fireRate = 1f;
+    private float fireRate;
     private float nexFireTime;
     public int diem;
     public int strongBullet;
@@ -24,6 +25,7 @@ public class Move : MonoBehaviour
     public Image fillSkill;
 
     LevelUp levelUp;
+    InformationPlayer playerInfo;
 
     private Camera maincamera;
 
@@ -48,35 +50,63 @@ public class Move : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-
         rb = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
         idRuning = Animator.StringToHash("isRuning");
         idJump = Animator.StringToHash("isJump");
-        rb = GetComponent<Rigidbody2D>();
         maincamera = Camera.main;
         levelUp = FindObjectOfType<LevelUp>();
+        playerInfo = GetComponent<InformationPlayer>();
 
+        // Lấy thông tin từ InformationPlayer
+        if (playerInfo != null)
+        {
+            moveSpeed = playerInfo.moveSpeed;
+            baseMoveSpeed = playerInfo.moveSpeed;
+            // attackSpeed là số lần bắn/giây, fireRate là thời gian giữa các lần bắn
+            fireRate = 1f / playerInfo.attackSpeed;
+        }
+        else
+        {
+            // Fallback nếu không tìm thấy InformationPlayer
+            moveSpeed = 2f;
+            baseMoveSpeed = 2f;
+            fireRate = 1f;
+            Debug.LogWarning("InformationPlayer component not found on " + gameObject.name);
+        }
     }
-    
+
 
     // Update is called once per frame
     void Update()
     {
-        if (Time.deltaTime==0)
+        if (Time.deltaTime == 0)
         {
             return;
         }
+
+        // Cập nhật thông tin từ InformationPlayer mỗi frame (để áp dụng upgrade)
+        if (playerInfo != null)
+        {
+            baseMoveSpeed = playerInfo.moveSpeed;
+            // Chỉ cập nhật moveSpeed nếu không đang dash
+            if (!isDashing)
+            {
+                moveSpeed = baseMoveSpeed;
+            }
+            fireRate = 1f / playerInfo.attackSpeed;
+        }
+
         levelUp.StrongBullet();
         levelUp.SpeedBullet();
 
-        isGround = Physics2D.OverlapCircle(groundCheck.position, 0.07f, groundLayer);        
-        if(isGround )
+        isGround = Physics2D.OverlapCircle(groundCheck.position, 0.07f, groundLayer);
+        if (isGround)
         {
             jumCount = 0;
         }
         float horizontalInput = Input.GetAxis("Horizontal");
-        if(horizontalInput != 0 )
+        if (horizontalInput != 0)
         {
             Movee(horizontalInput);
 
@@ -85,7 +115,7 @@ public class Move : MonoBehaviour
         {
             anim.SetBool(idRuning, false);
         }
-        if ((Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.W))&& jumCount<maxJum)
+        if ((Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.W)) && jumCount < maxJum)
         {
             Jum();
             jumCount++;
@@ -94,19 +124,19 @@ public class Move : MonoBehaviour
         {
             NotJum();
         }
-        if (Input.GetMouseButtonDown(0)&&Time.time>=nexFireTime)
+        if (Input.GetMouseButtonDown(0) && Time.time >= nexFireTime)
         {
             Shoot();
-            nexFireTime = Time.time+fireRate-diem/2;
-            
-        }
-        
+            nexFireTime = Time.time + fireRate;
 
-        if(skillOnCooldown)
+        }
+
+
+        if (skillOnCooldown)
         {
             skillCoolDownTimer -= Time.deltaTime;
 
-            if(skillCoolDownTimer <=0)
+            if (skillCoolDownTimer <= 0)
             {
                 skillOnCooldown = false;
                 skillCoolDownTimer = 0;
@@ -122,18 +152,18 @@ public class Move : MonoBehaviour
         }
 
 
-        if(Input.GetMouseButtonDown(1) && _dashTime <=0 && isDashing == false)
+        if (Input.GetMouseButtonDown(1) && _dashTime <= 0 && isDashing == false)
         {
-            moveSpeed += dashBost;
+            moveSpeed = baseMoveSpeed + dashBost;
             jumFore += dashTime;
             _dashTime = dashTime;
             isDashing = true;
         }
 
-        if(_dashTime <= 0 && isDashing == true)
+        if (_dashTime <= 0 && isDashing == true)
         {
             jumFore -= dashTime;
-            moveSpeed -= dashBost;
+            moveSpeed = baseMoveSpeed;
             isDashing = false;
         }
         else
@@ -163,7 +193,7 @@ public class Move : MonoBehaviour
     {
 
         rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumFore);
-        GameObject norInstance =  Instantiate(nor,jumPoint.position,jumPoint.rotation); // tạo obj norInstance
+        GameObject norInstance = Instantiate(nor, jumPoint.position, jumPoint.rotation); // tạo obj norInstance
         StartCoroutine(DestroyAfterDelay(norInstance, 1f)); //StartCoroutine được sử dụng để bắt đầu thực thi một coroutine
         anim.SetBool(idJump, true);
         _AudioManager.Instance.PlaySoundEffectMusic(_AudioManager.Instance.jumAudio);
@@ -176,19 +206,19 @@ public class Move : MonoBehaviour
     void Shoot()
     {
         // đạn bắng thẳng
-        Instantiate(bullerPrefabs,firePoint.position, firePoint.rotation);
+        Instantiate(bullerPrefabs, firePoint.position, firePoint.rotation);
 
-        if(strongBullet>=4)
+        if (strongBullet >= 4)
         {
-        // đạn bắn chéo lên
-        Quaternion upAngle = Quaternion.Euler(0, 0, 15); // Quay 15 độ
-        Instantiate(bullerPrefabs, firePoint.position, firePoint.rotation * upAngle);
+            // đạn bắn chéo lên
+            Quaternion upAngle = Quaternion.Euler(0, 0, 15); // Quay 15 độ
+            Instantiate(bullerPrefabs, firePoint.position, firePoint.rotation * upAngle);
 
-        // đạn bắn chéo xuống
-        Quaternion downAngle = Quaternion.Euler(0, 0, -15); // Quay -15 độ
-        Instantiate(bullerPrefabs, firePoint.position, firePoint.rotation * downAngle);
+            // đạn bắn chéo xuống
+            Quaternion downAngle = Quaternion.Euler(0, 0, -15); // Quay -15 độ
+            Instantiate(bullerPrefabs, firePoint.position, firePoint.rotation * downAngle);
         }
-        if(strongBullet>=8)
+        if (strongBullet >= 8)
         {
             // đạn bắn chéo lên
             Quaternion upAngle = Quaternion.Euler(0, 0, 30); // Quay 15 độ
@@ -217,16 +247,16 @@ public class Move : MonoBehaviour
     {
         Instantiate(bullerPrefabs, firePoint.position, firePoint.rotation);
         //...........................................................
-        for (int i = 15; i <= 180; i += 15) 
+        for (int i = 15; i <= 180; i += 15)
         {
-            Quaternion upAngle = Quaternion.Euler(0, 0, i); 
+            Quaternion upAngle = Quaternion.Euler(0, 0, i);
             Instantiate(bullerPrefabs, firePoint.position, firePoint.rotation * upAngle);
         }
 
         //...........................................................
         for (int i = -15; i > -180; i -= 15)
         {
-            Quaternion downAngle = Quaternion.Euler(0, 0, i); 
+            Quaternion downAngle = Quaternion.Euler(0, 0, i);
             Instantiate(bullerPrefabs, firePoint.position, firePoint.rotation * downAngle);
         }
 

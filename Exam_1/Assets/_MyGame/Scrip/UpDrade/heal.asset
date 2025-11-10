@@ -14,6 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   upgradeType: Health
   upgradeName: heal
-  description: duoc tang 15 mau
+  description: "t\u0103ng 15 m\xE1u t\u1ED1i \u0111a"
   value: 15
-  icon: {fileID: 21300000, guid: a9a030673ebda0f459e600bd76922836, type: 3}
+  icon: {fileID: 6225190075260361497, guid: 675472c437ebb3c4fb985297277f71f1, type: 3}

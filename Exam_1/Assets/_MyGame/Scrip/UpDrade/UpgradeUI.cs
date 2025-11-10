@@ -10,6 +10,7 @@ public class UpgradeUI : MonoBehaviour
     {
         [Header("Thành phần nút nâng cấp")]
         public Button button;
+        public Image iconImage; // Ảnh icon của nâng cấp
         public TextMeshProUGUI titleText;
         public TextMeshProUGUI descText;
     }
@@ -64,6 +65,20 @@ public class UpgradeUI : MonoBehaviour
                 var upgrade = currentOptions[i];
                 ui.titleText.text = upgrade.Name;
                 ui.descText.text = upgrade.Description;
+                
+                // Hiển thị icon của nâng cấp
+                if (ui.iconImage != null)
+                {
+                    if (upgrade.Icon != null)
+                    {
+                        ui.iconImage.sprite = upgrade.Icon;
+                        ui.iconImage.gameObject.SetActive(true);
+                    }
+                    else
+                    {
+                        ui.iconImage.gameObject.SetActive(false);
+                    }
+                }
 
                 ui.button.onClick.RemoveAllListeners();
 
