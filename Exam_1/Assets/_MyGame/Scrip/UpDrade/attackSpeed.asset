@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7fd569114e1d157479ca8635391f48eb, type: 3}
+  m_Name: attackSpeed
+  m_EditorClassIdentifier: 
+  upgradeType: AttackSpeed
+  upgradeName: "T\u0103ng t\u1ED1c \u0111\xE1nh"
+  description: "T\u0103ng 50% t\u1ED1c \u0111\u1ED9 \u0111\xE1nh."
+  value: 50
+  icon: {fileID: 8114546385115323444, guid: 1b59e678d35fa5d40a24df53ce74fe13, type: 3}
